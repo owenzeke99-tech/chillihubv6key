@@ -1,0 +1,918 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#090306">
+<title>Chilli Hub V6 — Premium Key System</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --red: #ff2848;
+  --red-dark: #a9002b;
+  --orange: #ff762c;
+  --gold: #ffd36a;
+  --bg: #090306;
+  --muted: #9c8e95;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  min-height: 100vh;
+  overflow-x: hidden;
+  color: #fff4f5;
+  font-family: Inter, sans-serif;
+  background:
+    radial-gradient(ellipse at 50% 17%, #4a0b1c 0, transparent 38%),
+    radial-gradient(ellipse at 0% 80%, #260811 0, transparent 35%),
+    var(--bg);
+}
+
+button { font: inherit; }
+
+.background {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.grid {
+  position: absolute;
+  inset: 0;
+  opacity: .13;
+  background-image:
+    linear-gradient(#ff344b 1px, transparent 1px),
+    linear-gradient(90deg, #ff344b 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: linear-gradient(transparent, black 25%, transparent 95%);
+}
+
+.glow {
+  position: absolute;
+  width: 340px;
+  height: 340px;
+  border-radius: 50%;
+  filter: blur(110px);
+  opacity: .15;
+  background: #ff1749;
+  animation: glowMove 8s ease-in-out infinite alternate;
+}
+
+.glow.one { top: -180px; left: -120px; }
+.glow.two {
+  right: -160px;
+  bottom: -170px;
+  background: #ff762c;
+  animation-delay: -4s;
+}
+
+.particles { position: absolute; inset: 0; }
+
+.particle {
+  position: absolute;
+  bottom: -20px;
+  width: 3px;
+  height: 7px;
+  border-radius: 50%;
+  background: #ff7951;
+  box-shadow: 0 0 9px #ff402a;
+  animation: rise linear infinite;
+}
+
+.wrapper {
+  width: min(100% - 28px, 680px);
+  margin: auto;
+  padding: 25px 0 20px;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  animation: enter .7s ease both;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand-mark {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 40px;
+  border: 1px solid #ff405a70;
+  background: linear-gradient(145deg, #42101c, #13060b);
+  color: #ff6b5d;
+  font-size: 21px;
+  clip-path: polygon(0 0, 100% 0, 100% 75%, 75% 100%, 0 100%);
+}
+
+.brand-name {
+  font-family: Orbitron, sans-serif;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+}
+
+.brand-name small {
+  display: block;
+  margin-top: 5px;
+  color: var(--muted);
+  font-family: Inter, sans-serif;
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 2px;
+}
+
+.nav-status {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 10px;
+  border: 1px solid #4eff9633;
+  border-radius: 5px;
+  color: #86ffb1;
+  background: #38ff8010;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #4eff96;
+  box-shadow: 0 0 10px #4eff96;
+  animation: blink 1.5s infinite;
+}
+
+.hero {
+  text-align: center;
+  padding: 4px 0 25px;
+}
+
+.logo {
+  position: relative;
+  width: 190px;
+  height: 190px;
+  margin: 0 auto 7px;
+  display: grid;
+  place-items: center;
+  isolation: isolate;
+  animation: logoEnter .9s ease both;
+}
+
+.logo-aura {
+  position: absolute;
+  width: 115px;
+  height: 115px;
+  border-radius: 50%;
+  background: #ff193c;
+  filter: blur(47px);
+  opacity: .3;
+  animation: aura 2.5s ease-in-out infinite alternate;
+}
+
+.logo-ring {
+  position: absolute;
+  inset: 12px;
+  border: 1px solid #ff52634c;
+  border-radius: 50%;
+}
+
+.logo-ring::before {
+  content: "";
+  position: absolute;
+  inset: -7px;
+  border: 1px dashed #ff74484d;
+  border-radius: 50%;
+  animation: spin 24s linear infinite;
+}
+
+.logo-ring::after {
+  content: "";
+  position: absolute;
+  inset: 9px;
+  border: 1px solid #ff2f5230;
+  border-radius: 50%;
+}
+
+.chilli {
+  position: relative;
+  z-index: 2;
+  width: 165px;
+  height: 180px;
+  overflow: visible;
+  filter: drop-shadow(0 0 13px #ff2a3b55);
+  animation: float 3.2s ease-in-out infinite;
+}
+
+.hero h1 {
+  font-family: Orbitron, sans-serif;
+  font-weight: 900;
+  font-size: clamp(30px, 7.5vw, 49px);
+  line-height: 1.25;
+  letter-spacing: -1.8px;
+  background: linear-gradient(180deg, #fff9ed 0%, #ffb9a0 30%, #ff525b 60%, #c90035 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 20px #ff1f452a);
+}
+
+.hero h1 span {
+  color: #fff;
+  -webkit-text-fill-color: #fff;
+  font-size: .65em;
+  letter-spacing: 6px;
+}
+
+.tagline {
+  margin-top: 13px;
+  color: #bfaeb5;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 4px;
+}
+
+.tagline b { color: #ff5266; }
+
+.card {
+  position: relative;
+  overflow: hidden;
+  padding: 24px;
+  border: 1px solid #ff3e573f;
+  border-radius: 15px;
+  background: linear-gradient(145deg, #180910ed, #0c060bf7 70%);
+  box-shadow: 0 18px 70px #0008, 0 0 35px #ff173b0b,
+              inset 0 1px #ffffff08;
+  animation: enter .8s .15s ease both;
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  left: 12%;
+  top: 0;
+  width: 76%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #ff526c, transparent);
+  box-shadow: 0 0 12px #ff405a;
+}
+
+.card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 19px;
+  border-bottom: 1px solid #ffffff0c;
+}
+
+.card-heading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+}
+
+.heading-icon {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  color: #ff6477;
+  background: #ff244a13;
+  border: 1px solid #ff415133;
+}
+
+.heading-icon svg { width: 18px; height: 18px; }
+
+.version {
+  padding: 7px 9px;
+  border: 1px solid #ff4a6038;
+  border-radius: 5px;
+  color: #ff8d9c;
+  background: #ff1c3d0b;
+  font-family: Orbitron, sans-serif;
+  font-size: 9px;
+  letter-spacing: 1px;
+  white-space: nowrap;
+}
+
+.label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 22px 0 10px;
+  color: #e8dce0;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+}
+
+.label span:last-child {
+  color: #ff6579;
+  font-size: 9px;
+}
+
+.key-field {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  min-height: 59px;
+  border: 1px solid #ff42553c;
+  border-radius: 9px;
+  background: #080408;
+  transition: border-color .25s, box-shadow .25s;
+}
+
+.key-field:focus-within,
+.key-field:hover {
+  border-color: #ff5b70a8;
+  box-shadow: 0 0 22px #ff1b3b12;
+}
+
+.key-value {
+  flex: 1;
+  min-width: 0;
+  color: #ffb2bf;
+  font-size: clamp(10px, 2.6vw, 13px);
+  line-height: 1.8;
+  overflow-wrap: anywhere;
+  user-select: text;
+}
+
+.small-copy {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 37px;
+  height: 37px;
+  color: #ff9aaa;
+  border: 1px solid #ff40552e;
+  border-radius: 7px;
+  background: #ff23430d;
+  cursor: pointer;
+  transition: .25s;
+}
+
+.small-copy svg { width: 17px; height: 17px; }
+
+.small-copy:hover {
+  color: white;
+  background: #c51538;
+  box-shadow: 0 0 15px #ff284733;
+}
+
+.copy-button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 58px;
+  margin-top: 17px;
+  overflow: hidden;
+  border: 1px solid #ff9a9c;
+  border-radius: 9px;
+  color: white;
+  background: linear-gradient(110deg, #a90030, #ff304f 48%, #c30b35);
+  box-shadow: 0 6px 24px #ff153b21, inset 0 1px #ffffff35;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: transform .2s, box-shadow .2s, filter .2s;
+}
+
+.copy-button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 65%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, #ffffff55, transparent);
+  transform: skewX(-25deg);
+  animation: shine 4s ease-in-out infinite;
+}
+
+.copy-button:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.13);
+  box-shadow: 0 8px 30px #ff153b4c;
+}
+
+.copy-button:active { transform: scale(.99); }
+
+.copy-button svg,
+.copy-button span {
+  position: relative;
+  z-index: 1;
+}
+
+.copy-button svg { width: 20px; height: 20px; }
+
+.notice {
+  min-height: 17px;
+  margin-top: 12px;
+  color: #98858d;
+  font-size: 10px;
+  text-align: center;
+  line-height: 1.7;
+}
+
+.notice.success { color: #ff9caa; }
+
+.features {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 9px;
+  margin-top: 23px;
+  padding-top: 20px;
+  border-top: 1px solid #ffffff0c;
+}
+
+.feature {
+  padding: 12px 5px;
+  border: 1px solid #ffffff0b;
+  border-radius: 9px;
+  background: #ffffff04;
+  text-align: center;
+  transition: .25s;
+}
+
+.feature:hover {
+  border-color: #ff3e573f;
+  background: #ff244a0a;
+  transform: translateY(-3px);
+}
+
+.feature svg {
+  width: 23px;
+  height: 23px;
+  color: #ff6277;
+  margin-bottom: 9px;
+}
+
+.feature b {
+  display: block;
+  font-size: 9px;
+  letter-spacing: .5px;
+}
+
+.feature small {
+  display: block;
+  margin-top: 5px;
+  color: #8e7d84;
+  font-size: 9px;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 24px 2px 0;
+  color: #8e7d84;
+  font-size: 9px;
+  letter-spacing: 1px;
+}
+
+.footer strong {
+  color: #ff6477;
+  font-family: Orbitron, sans-serif;
+  font-size: 10px;
+  letter-spacing: 1px;
+}
+
+@keyframes rise {
+  0% { transform: translateY(0) scale(.7); opacity: 0; }
+  15% { opacity: .85; }
+  100% { transform: translateY(-110vh) scale(1.3); opacity: 0; }
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(-2deg); }
+  50% { transform: translateY(-7px) rotate(2deg); }
+}
+
+@keyframes aura {
+  from { opacity: .18; transform: scale(.8); }
+  to { opacity: .4; transform: scale(1.25); }
+}
+
+@keyframes glowMove {
+  from { transform: translate(0, 0); }
+  to { transform: translate(45px, 35px); }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: .35; }
+}
+
+@keyframes shine {
+  0%, 40% { left: -120%; }
+  70%, 100% { left: 150%; }
+}
+
+@keyframes enter {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes logoEnter {
+  from { opacity: 0; transform: scale(.8); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@media (max-width: 480px) {
+  .wrapper { width: calc(100% - 22px); padding-top: 18px; }
+  .nav { margin-bottom: 17px; }
+  .brand-name { font-size: 10px; }
+  .logo { width: 160px; height: 160px; }
+  .chilli { width: 140px; height: 155px; }
+  .hero { padding-bottom: 19px; }
+  .hero h1 { letter-spacing: -1.3px; }
+  .tagline { font-size: 8px; letter-spacing: 2.7px; }
+  .card { padding: 17px 13px; border-radius: 12px; }
+  .card-heading { font-size: 10px; letter-spacing: .7px; }
+  .version { font-size: 8px; padding: 7px; }
+  .key-field { padding: 9px; gap: 7px; }
+  .key-value { font-size: 10px; }
+  .features { gap: 5px; }
+  .feature { padding: 10px 2px; }
+  .feature b { font-size: 8px; }
+  .feature small { font-size: 8px; }
+  .footer { flex-wrap: wrap; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+}
+</style>
+</head>
+
+<body>
+<div class="background">
+  <div class="grid"></div>
+  <div class="glow one"></div>
+  <div class="glow two"></div>
+  <div class="particles" id="particles"></div>
+</div>
+
+<main class="wrapper">
+
+  <header class="nav">
+    <div class="brand">
+      <div class="brand-mark">C</div>
+      <div class="brand-name">
+        CHILLI HUB
+        <small>PREMIUM ACCESS</small>
+      </div>
+    </div>
+
+    <div class="nav-status">
+      <span class="status-dot"></span>
+      SYSTEM ONLINE
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="logo">
+      <div class="logo-aura"></div>
+      <div class="logo-ring"></div>
+
+      <!-- Logo liền mạch: ngọn lửa ôm lấy trái ớt -->
+      <svg class="chilli" viewBox="0 0 200 220"
+           xmlns="http://www.w3.org/2000/svg"
+           role="img" aria-label="Chilli Hub chili and flame logo">
+        <defs>
+          <linearGradient id="flameOuter" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#fff4a8"/>
+            <stop offset=".32" stop-color="#ffb52e"/>
+            <stop offset=".68" stop-color="#ff5429"/>
+            <stop offset="1" stop-color="#ed1745"/>
+          </linearGradient>
+
+          <linearGradient id="flameInner" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#fffbd2"/>
+            <stop offset=".5" stop-color="#ffd05b"/>
+            <stop offset="1" stop-color="#ff692b"/>
+          </linearGradient>
+
+          <linearGradient id="chiliSkin" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#ffaaa0"/>
+            <stop offset=".22" stop-color="#ff4d61"/>
+            <stop offset=".53" stop-color="#f00e3d"/>
+            <stop offset=".82" stop-color="#ad0635"/>
+            <stop offset="1" stop-color="#5d0927"/>
+          </linearGradient>
+
+          <linearGradient id="stemColor" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#e7ff9a"/>
+            <stop offset=".45" stop-color="#74d941"/>
+            <stop offset="1" stop-color="#206a31"/>
+          </linearGradient>
+
+          <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="3" result="blur"/>
+            <feMerge>
+              <feMergeNode in="blur"/>
+              <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+          </filter>
+        </defs>
+
+        <!-- Ngọn lửa bao quanh, cùng một hình khối với quả ớt -->
+        <g filter="url(#softGlow)">
+          <path d="M99 208
+            C63 207 31 182 26 149
+            C21 121 40 98 45 76
+            C49 60 43 45 36 31
+            C61 43 76 65 72 87
+            C91 66 99 39 91 12
+            C117 34 132 60 120 87
+            C141 76 152 56 148 41
+            C176 73 181 105 164 136
+            C151 170 126 197 99 208Z"
+            fill="#a10b25" stroke="#ff4b27" stroke-width="2.5"/>
+
+          <path d="M99 196
+            C69 190 47 169 46 144
+            C44 125 58 106 62 89
+            C76 105 79 119 73 136
+            C94 117 109 86 104 56
+            C127 78 132 102 121 124
+            C140 114 150 96 148 81
+            C165 108 160 139 144 161
+            C132 181 115 193 99 196Z"
+            fill="url(#flameOuter)"/>
+        </g>
+
+        <!-- Lõi lửa sáng nối trực tiếp với thân ớt -->
+        <path d="M102 180
+          C81 174 71 156 80 138
+          C87 125 95 116 96 103
+          C110 120 113 135 104 149
+          C120 141 130 127 130 115
+          C143 140 129 169 102 180Z"
+          fill="url(#flameInner)"/>
+
+        <!-- Cuống xanh và lá ớt -->
+        <path d="M94 59
+          C83 45 89 30 105 21
+          C121 13 138 22 141 36
+          C128 30 116 34 108 49Z"
+          fill="#15351a" stroke="#240b10" stroke-width="5"
+          stroke-linejoin="round"/>
+
+        <path d="M95 56
+          C85 42 96 29 109 25
+          C122 20 135 27 137 35
+          C123 31 113 40 107 51Z"
+          fill="url(#stemColor)"/>
+
+        <path d="M96 46 C106 35 119 29 132 32"
+          fill="none" stroke="#edffab" stroke-width="2.5"
+          stroke-linecap="round"/>
+
+        <!-- Trái ớt lớn, bóng, viền rõ -->
+        <path d="M104 49
+          C84 43 64 55 51 75
+          C33 102 30 130 43 153
+          C55 175 79 187 99 171
+          C124 151 140 120 137 89
+          C135 67 123 52 104 49Z"
+          fill="#500b23" stroke="#21050f" stroke-width="8"
+          stroke-linejoin="round"/>
+
+        <path d="M104 49
+          C84 43 64 55 51 75
+          C33 102 30 130 43 153
+          C55 175 79 187 99 171
+          C124 151 140 120 137 89
+          C135 67 123 52 104 49Z"
+          fill="url(#chiliSkin)" stroke="#ff8b91" stroke-width="1.5"
+          stroke-linejoin="round"/>
+
+        <!-- Phản chiếu ánh sáng -->
+        <path d="M94 59
+          C74 67 53 94 49 117
+          C46 135 52 149 64 158"
+          fill="none" stroke="#ffd6bf" stroke-width="6"
+          stroke-linecap="round"/>
+
+        <path d="M93 60
+          C79 69 65 90 60 108"
+          fill="none" stroke="#fff1df" stroke-width="2"
+          stroke-linecap="round"/>
+
+        <path d="M124 77
+          C130 100 116 135 98 151"
+          fill="none" stroke="#a90030" stroke-width="4"
+          stroke-linecap="round"/>
+
+        <!-- Tia lửa trang trí -->
+        <path d="M29 79L21 65L34 73Z" fill="#fff0a2"/>
+        <path d="M157 68L170 58L164 77Z" fill="#ff9a3d"/>
+        <path d="M43 177L39 166L50 173Z" fill="#ffd06a"/>
+        <circle cx="27" cy="108" r="2.5" fill="#fff1ac"/>
+        <circle cx="164" cy="119" r="2.5" fill="#ff7544"/>
+      </svg>
+    </div>
+
+    <h1>CHILLI HUB <span>V6</span></h1>
+    <p class="tagline">IGNITE YOUR <b>EXPERIENCE</b></p>
+  </section>
+
+  <section class="card">
+    <div class="card-top">
+      <div class="card-heading">
+        <div class="heading-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2 4 6v6c0 5 3.5 8 8 10 4.5-2 8-5 8-10V6z"/>
+            <path d="m9 12 2 2 4-4"/>
+          </svg>
+        </div>
+        KEY ACCESS PANEL
+      </div>
+      <span class="version">VERSION 6.0</span>
+    </div>
+
+    <div class="label">
+      <span>YOUR ACCESS KEY</span>
+      <span>● READY</span>
+    </div>
+
+    <div class="key-field">
+      <div class="key-value" id="keyValue">ChilliHubV6KeyjKaowi - Kalwowjwnwiwih</div>
+
+      <button class="small-copy" onclick="copyKey()" aria-label="Copy access key">
+        <svg id="smallIcon" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" stroke-linejoin="round">
+          <rect x="8" y="8" width="13" height="13" rx="2"/>
+          <path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/>
+        </svg>
+      </button>
+    </div>
+
+    <button class="copy-button" id="copyButton" onclick="copyKey()">
+      <svg id="mainIcon" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round">
+        <rect x="8" y="8" width="13" height="13" rx="2"/>
+        <path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/>
+      </svg>
+      <span id="buttonText">COPY KEY</span>
+    </button>
+
+    <p class="notice" id="notice" aria-live="polite">
+      Click the button to copy your access key.
+    </p>
+
+    <div class="features">
+      <div class="feature">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m13 2-9 12h7l-1 8 10-13h-7z"/>
+        </svg>
+        <b>HIGH SPEED</b>
+        <small>Fast access</small>
+      </div>
+
+      <div class="feature">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11z"/>
+          <path d="m9 12 2 2 4-4"/>
+        </svg>
+        <b>SECURE</b>
+        <small>Key display</small>
+      </div>
+
+      <div class="feature">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m12 2 3 7 7 3-7 3-3 7-3-7-7-3 7-3z"/>
+        </svg>
+        <b>PREMIUM</b>
+        <small>Chilli Hub V6</small>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <span>© CHILLI HUB V6</span>
+    <strong>BUILT TO BURN.</strong>
+    <span>PREMIUM ACCESS</span>
+  </footer>
+
+</main>
+
+<script>
+const ACCESS_KEY = "ChilliHubV6KeyjKaowi - Kalwowjwnwiwih";
+
+const copyIcon = `
+  <rect x="8" y="8" width="13" height="13" rx="2"/>
+  <path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/>
+`;
+
+const checkIcon = `<path d="m5 12 4 4L19 6"/>`;
+
+let resetCopyTimer;
+
+async function copyKey() {
+  const buttonText = document.getElementById("buttonText");
+  const notice = document.getElementById("notice");
+  const mainIcon = document.getElementById("mainIcon");
+  const smallIcon = document.getElementById("smallIcon");
+
+  clearTimeout(resetCopyTimer);
+
+  try {
+    if (navigator.clipboard && window.isSecureContext) {
+      await navigator.clipboard.writeText(ACCESS_KEY);
+    } else {
+      const textarea = document.createElement("textarea");
+      textarea.value = ACCESS_KEY;
+      textarea.readOnly = true;
+      textarea.style.position = "fixed";
+      textarea.style.left = "-9999px";
+      document.body.appendChild(textarea);
+      textarea.select();
+
+      const success = document.execCommand("copy");
+      textarea.remove();
+
+      if (!success) throw new Error("Copy unsuccessful");
+    }
+
+    buttonText.textContent = "KEY COPIED!";
+    notice.textContent = "✓ Access key copied successfully!";
+    notice.classList.add("success");
+    mainIcon.innerHTML = checkIcon;
+    smallIcon.innerHTML = checkIcon;
+
+    resetCopyTimer = setTimeout(() => {
+      buttonText.textContent = "COPY KEY";
+      notice.textContent = "Click the button to copy your access key.";
+      notice.classList.remove("success");
+      mainIcon.innerHTML = copyIcon;
+      smallIcon.innerHTML = copyIcon;
+    }, 2200);
+
+  } catch (error) {
+    notice.textContent = "Copy unavailable. Please select the key and copy it manually.";
+    notice.classList.remove("success");
+  }
+}
+
+// Hiệu ứng tàn lửa bay lên
+const particleLayer = document.getElementById("particles");
+
+for (let i = 0; i < 48; i++) {
+  const p = document.createElement("i");
+  p.className = "particle";
+
+  const size = 1 + Math.random() * 2.5;
+  p.style.left = Math.random() * 100 + "%";
+  p.style.width = size + "px";
+  p.style.height = (size * 2.1) + "px";
+  p.style.animationDuration = (6 + Math.random() * 10) + "s";
+  p.style.animationDelay = (-Math.random() * 14) + "s";
+  p.style.opacity = (0.25 + Math.random() * 0.7).toString();
+
+  particleLayer.appendChild(p);
+}
+</script>
+</body>
+</html>
